@@ -27,7 +27,8 @@ var db = new Crate({
 //Now lets build some queries, using placeholders, you can either use ? or $1, $2, $3...
 var q = {
   getSomeTweets: db.Query('SELECT text FROM tweets LIMIT ?'),
-  getReTweeted:  db.Query('SELECT * FROM tweets WHERE retweeted = $1 LIMIT $2') 
+  getReTweeted:  db.Query('SELECT text FROM tweets WHERE retweeted = $1 LIMIT $2'),
+  getAllTweets:  db.Query('SELECT text FROM tweets')
 };
 
 //Now lets run our queries
@@ -42,8 +43,21 @@ q.getSomeTweets.execute([10], function(res) {
   console.log(res.rows);
 }
 
-//The other query
+//Get only tweets with retweets
 q.getReTweeted.execute([true, 10], function(res) {
+  if(res.error) {
+    //Do something
+    return;
+  }
+  
+  console.log('Returned %d rows', res.rowcount);
+  console.log('Columns returned:\n', res.cols);
+  console.log(res.rows);
+}
+
+//Get all tweets
+//In this case, we can omit the statements, and just pass a callback
+q.getAllTweets.execute(function(res) {
   if(res.error) {
     //Do something
     return;
