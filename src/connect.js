@@ -37,8 +37,6 @@ Connect.prototype.send = function POST(query, statements, callback) {
 		data.args = statements;
 	}
 	
-	console.log( JSON.stringify(data) );
-
 	request.write( JSON.stringify(data) );
 	request.end();
 

@@ -13,7 +13,12 @@ var Execute = function Construct(query, connection) {
 * Execute the query
 */
 Execute.prototype.execute = function Execute(statements, callback) {
-	this.connection.send(this.query, statements, callback); 
+	if(typeof statements === 'function') { //statements was sent as the callback
+		callback = statements;
+		statements = [];
+	}
+
+	this.connection.send(this.query, statements || [], callback); 
 }
 
 
