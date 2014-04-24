@@ -1,6 +1,4 @@
-var Crate = require('../index.js');
-
-var db = new Crate();
+var db = require('./db.js');
 
 var query = db.Query('SELECT text FROM tweets LIMIT ?');
 
