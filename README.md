@@ -1,7 +1,7 @@
 CrateJS
 =======
 
-A simple driver to access your Crate data storage.
+A simple driver to access your Crate data storage. There are still some things todo. But for now you can do some basic queries following the usage example.
 
 
 Installation
