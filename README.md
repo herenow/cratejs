@@ -18,6 +18,7 @@ Sample usage
 var Crate = require('cratejs');
 
 //You can have as many db instance as you please :)
+//You should probably add this part to another module and export it!
 var db = new Crate({
   host: 'localhost', //Defaults to localhost
   port: 4200 //Defaults to 4200
@@ -52,6 +53,9 @@ q.getReTweeted.execute([true, 10], function(res) {
   console.log('Columns returned:\n', res.cols);
   console.log(res.rows);
 }
+
+//So basically, what we are doing is:
+//new Crate().query(someQuery).execute([statements], callback);
 ```
 
 
