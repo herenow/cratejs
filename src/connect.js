@@ -20,20 +20,45 @@ var Connect = function Contructor(conf) {
 /**
  * Send a query POST
  */
-Connect.send = function POST(query, statements, callback) {
+Connect.prototype.send = function POST(query, statements, callback) {
 	//I really hope this query is sanatized!
 	var request = Http.request({
 		method: 'POST',
 		host:   this.host,
 		port:   this.port,
 		path:   '/_sql'
-	}, callback);
+	});
 
 	var data = {
-		stmt: query,
-		args: statements
+		stmt: query
+	}
+
+	if(statements.length > 0) {
+		data.args = statements;
 	}
 	
+	console.log( JSON.stringify(data) );
+
 	request.write( JSON.stringify(data) );
 	request.end();
+
+	if(typeof callback === 'function') {
+		request.on('response', function(res) {
+			var buf = '';
+			
+			res.on('data', function(data) {
+				buf += data;
+			});
+
+			res.on('end', function() {
+				callback(JSON.parse(buf));
+			});
+		});
+	}
 }
+
+
+/**
+ * Exports
+ */
+module.exports = Connect;

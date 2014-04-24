@@ -1,8 +1,10 @@
 /**
- * Init pooint
+ * Libs
  */
-var Crate = module.exports = function Init(conf) {
-	var Controller = request('./src/main')(conf);
+var Controller = require('./src/main');
 
-	return Controller;
-}
+
+/**
+ * Exports
+ */
+module.exports = Controller;
