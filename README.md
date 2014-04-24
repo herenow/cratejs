@@ -55,7 +55,7 @@ q.getReTweeted.execute([true, 10], function(res) {
 }
 
 //So basically, what we are doing is:
-//new Crate().query(someQuery).execute([statements], callback);
+//new Crate().Query(someQuery).execute([statements], callback);
 ```
 
 
