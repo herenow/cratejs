@@ -12,18 +12,18 @@ var Connect = function Contructor(conf) {
 	this.port = conf.port || 4200;
 	this.user = conf.user || null;
 	this.pass = conf.pass || null;
-    
-    if(this.cluster && this.cluster.length > 0) { //They sent an array with the host/port of each cluster
-        this.load_balance = 'rr'; //Round-Robin
-        this.rr_count = 0;
-        this.lb_get = function() {
-            if(this.rr_count >= this.cluster.length) {
-                this.rr_count = 0;   
-            }
-            
-            return this.cluster[ this.rr_count++ ];
-        }
-    }
+	this.cluster = conf.cluster || [];    
+
+	if(this.cluster.length > 0) { //They sent an array with the host/port of each cluster
+        	this.load_balance = 'rr'; //Round-Robin
+        	this.rr_count = 0;
+        	this.lb_get = function() {
+            		if(this.rr_count >= this.cluster.length) {
+                		this.rr_count = 0;   
+            		}
+            		return this.cluster[ this.rr_count++ ];
+        	}
+    	}
 
 	//TODO test connection method
 }
@@ -39,12 +39,16 @@ Connect.prototype.send = function POST(query, statements, callback) {
         //No need to specify Keep-Alive, node will use the default global agent
     }
     
-    if(this.load_balance === 'rr') {
+    if(this.load_balance == 'rr') {
         var node = this.lb_get();
-        
-        this.host = node.host || 'localhost';
-        this.port = node.port || 4200;
+
+        options.host = node.host || 'localhost';
+        options.port = node.port || 4200;
     }
+	else {
+		options.host = this.host;
+		options.port = this.port;
+	}
     
 	var request = Http.request(options);
     
