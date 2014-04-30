@@ -33,18 +33,18 @@ var Connect = function Contructor(conf) {
  * Send a query POST
  */
 Connect.prototype.send = function POST(query, statements, callback) {
-    var options = {
+   	 var options = {
 		method: 'POST',
 		path:   '/_sql'
-        //No need to specify Keep-Alive, node will use the default global agent
-    }
+        	//No need to specify Keep-Alive, node will use the default global agent
+    	}
     
-    if(this.load_balance == 'rr') {
-        var node = this.lb_get();
+    	if(this.load_balance == 'rr') {
+        	var node = this.lb_get();
 
-        options.host = node.host || 'localhost';
-        options.port = node.port || 4200;
-    }
+        	options.host = node.host || 'localhost';
+        	options.port = node.port || 4200;
+   	}
 	else {
 		options.host = this.host;
 		options.port = this.port;
