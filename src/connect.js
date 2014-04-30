@@ -12,6 +12,18 @@ var Connect = function Contructor(conf) {
 	this.port = conf.port || 4200;
 	this.user = conf.user || null;
 	this.pass = conf.pass || null;
+    
+    if(this.cluster && this.cluster.length > 0) { //They sent an array with the host/port of each cluster
+        this.load_balance = 'rr'; //Round-Robin
+        this.rr_count = 0;
+        this.lb_get = function() {
+            if(this.rr_count >= this.cluster.length) {
+                this.rr_count = 0;   
+            }
+            
+            return this.cluster[ this.rr_count++ ];
+        }
+    }
 
 	//TODO test connection method
 }
@@ -21,14 +33,22 @@ var Connect = function Contructor(conf) {
  * Send a query POST
  */
 Connect.prototype.send = function POST(query, statements, callback) {
-	//I really hope this query is sanatized!
-	var request = Http.request({
+    var options = {
 		method: 'POST',
-		host:   this.host,
-		port:   this.port,
 		path:   '/_sql'
-	});
-
+        //No need to specify Keep-Alive, node will use the default global agent
+    }
+    
+    if(this.load_balance === 'rr') {
+        var node = this.lb_get();
+        
+        this.host = node.host || 'localhost';
+        this.port = node.port || 4200;
+    }
+    
+	var request = Http.request(options);
+    
+    //I really hope this query is sanatized!
 	var data = {
 		stmt: query
 	}
