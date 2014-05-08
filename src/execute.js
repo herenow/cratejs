@@ -2,8 +2,8 @@
  * Constructor
  */
 var Execute = function Construct(query, connection) {
-	this.query = query;
-	this.connection = connection;
+	this.query = query; //expose the queryString of this object
+	this.connection = connection; //under which connection will this query execute
 
 	return this;
 }
