@@ -3,6 +3,7 @@
  */
 var Connect = require('./connect');
 var Query   = require('./query');
+var Execute = require('./execute');
 
 
 /**
@@ -13,8 +14,8 @@ var Control = function Contructor(conf) {
 		conf = {};
 	}
 
-	this.connection = new Connect(conf);
-	
+	this._connection = new Connect(conf);
+
 	return this;
 };
 
@@ -23,9 +24,10 @@ var Control = function Contructor(conf) {
  * Methods
  */
 Control.prototype.Query   = Query;
+Control.prototype.execute = Execute.direct; //Direct execution of a query
 
 
 /**
  * Exports
  */
-module.exports = Control; 
+module.exports = Control;

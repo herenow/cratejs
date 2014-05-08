@@ -5,14 +5,16 @@ var Execute = require('./execute');
 
 
 /**
- * db.query()
+ * db.Query() - Contructor
  */
 var Query = function Query(str) {
-	//Create a new execute for this query
-	var execute = new Execute(str, this.connection); //this.connection was inherited from the Controller (main.js)
-							 //Control.prototype.Query
+    this._queryString = str;
 
-	return execute;
+	return {
+        execute: Execute.query.bind(this) //I should be prototyping :(
+                                          //But this code is being refactored
+                                          //I know this is ugly :(
+    };
 }
 
 

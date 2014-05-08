@@ -1,24 +1,33 @@
 /**
- * Constructor
+ * Execute like function
  */
-var Execute = function Construct(query, connection) {
-	this.query = query; //expose the queryString of this object
-	this.connection = connection; //under which connection will this query execute
-
-	return this;
-}
+var Execute = {}
 
 
 /**
-* Execute the query
+* Execute a constructed db.Query()
 */
-Execute.prototype.execute = function Execute(statements, callback) {
+Execute.query = function Execute(statements, callback) {
 	if(typeof statements === 'function') { //statements was sent as the callback
 		callback = statements;
 		statements = [];
 	}
 
-	this.connection.send(this.query, statements || [], callback); 
+	this._connection.send(this._queryString, statements || [], callback);
+                        //this._queryString; Can be found on ./query.js constructor function
+}
+
+
+/**
+ * Direct execution of a query
+ */
+Execute.direct = function Direct(query, statements, callback) {
+    if(typeof statements === 'function') { //statements was sent as the callback
+        callback = statements;
+        statements = [];
+    }
+
+    this._connection.send(query, statements || [], callback);
 }
 
 
