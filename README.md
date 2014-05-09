@@ -90,8 +90,7 @@ updateBars.run(function(err, res) {});
 var deleteBars = db.Delete('fooTable')
     .where({
         bar: 1
-    })
-    .limit(1);
+    });
 
 deleteBars.run(function(err, res) {});
 ```
