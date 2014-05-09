@@ -30,7 +30,6 @@ function Update(options, connection) {
         setArgs: options.setArgs || [],
         where: options.where || '',
         whereArgs: options.whereArgs || [],
-        limit: options.limit || '',
     }
 
     return this;
@@ -43,7 +42,6 @@ function Update(options, connection) {
 Update.prototype.set   = set;
 Update.prototype.table = table;
 Update.prototype.where = where;
-Update.prototype.limit = limit;
 
 
 /**

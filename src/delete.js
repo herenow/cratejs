@@ -27,7 +27,6 @@ function Delete(options, connection) {
         table: options.table || '',
         where: options.where || '',
         whereArgs: options.whereArgs || [],
-        limit: options.limit || '',
     }
 
     return this;
@@ -39,7 +38,6 @@ function Delete(options, connection) {
  */
 Delete.prototype.table = table;
 Delete.prototype.where = where;
-Delete.prototype.limit = limit;
 
 
 /**
