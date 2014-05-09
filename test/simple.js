@@ -21,27 +21,60 @@ describe('Cratejs', function() {
 
 	describe('Now try to query the dabtase', function(){
 		it('Should return an rows from the query', function(done) {
-			query[0].execute([100], function(res) {
-				if(res.error) {
-					return done(res.error);
+			query[0].execute([100], function(err, res) {
+				if(err) {
+					return done(err);
 				}
 				else if(res.rowcount < 1) {
 					return done('no rows returned');
 				}
+				console.log(res);
 				done();
 			});
 		});
         it('Should return an rows from the query (direct execution)', function(done) {
-            db.execute('SELECT * FROM sys.cluster LIMIT ?', [100], function(res) {
-                if(res.error) {
-                    return done(res.error);
+            db.execute('SELECT * FROM sys.cluster LIMIT ?', [100], function(err, res) {
+                if(err) {
+                    return done(err);
                 }
                 else if(res.rowcount < 1) {
                     return done('no rows returned');
                 }
+				console.log(res);
                 done();
             });
         });
+		it('Should return create a sample table', function(done) {
+			db.execute('CREATE TABLE sample (bar integer, id integer, sample string)', [100], function(err, res) {
+				if(err) {
+					console.log(err, res)
+				}
+				done();
+			});
+		});
+	});
+
+	describe('Extended methods', function(){
+		it('db.Select', function(done) {
+			db.Select('sys.cluster').run(function(err, res) {
+					console.log(err, res);
+					done();
+			})
+		});
+		it('db.Insert', function(done) {
+			db.Insert('sample').data([{
+				bar: 1,
+				id: 2,
+				sample: 'asdas',
+			}, {
+				bar: 1,
+				id: 2,
+				sample: 'asdas',
+			}]).run(function(err, res) {
+					console.log(err, res);
+					done();
+			})
+		});
 	});
 
 
