@@ -44,7 +44,7 @@ Delete.prototype.where = where;
  * Run
  */
 Delete.prototype.run = function Run(cb) {
-    var query = util.format('DELETE FROM %s %s %s', this._prop.table, this._prop.where, this._prop.limit);
+    var query = util.format('DELETE FROM %s %s', this._prop.table, this._prop.where);
 
     this._connection.queryPost(query, this._prop.whereArgs, cb);
 

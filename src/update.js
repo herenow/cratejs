@@ -48,7 +48,7 @@ Update.prototype.where = where;
  * Run
  */
 Update.prototype.run = function Run(cb) {
-    var query = util.format('UPDATE %s SET %s %s %s', this._prop.table, this._prop.set, this._prop.where, this._prop.limit)
+    var query = util.format('UPDATE %s SET %s %s', this._prop.table, this._prop.set, this._prop.where)
 
     this._connection.queryPost(query, this._prop.setArgs.concat(this._prop.whereArgs), cb);
 
