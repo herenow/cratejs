@@ -5,15 +5,15 @@ var util = require('util');
 
 module.exports = function columns(_columns) {
     if(arguments.length === 0) {
-        this._columns = '*';
-        return this;
+        this._prop.columns = '*';
+    }
+    else {
+        if(typeof _columns === 'string') {
+            _columns = [_columns];
+        }
+
+        this._prop.columns = util.format('%s', _columns.join(','));
     }
 
-    if(typeof _columns === 'string') {
-        _columns = [_columns];
-    }
-
-    this._columns = util.format('%s', _columns.join(','));
-
-    return this;
+    return new this.constructor(this._prop, this._connection);
 }

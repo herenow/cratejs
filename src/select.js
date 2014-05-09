@@ -13,23 +13,27 @@ var limit   = require('./proto/limit');
  * db.Find() - initiator
  */
 function Init(_table) {
-    return new Select(_table, this._connection);
+    return new Select({table: _table}, this._connection);
 }
 
 
 /**
  * Find constructor
  */
-function Select(_table, connection) {
+function Select(options, connection) {
+    options = options || {};
     this._connection = connection;
 
-    //defaults
-    this._columns = '*';
-    this._table   = _table || '';
-    this._where   = '';
-    this._whereArgs = [];
-    this._limit   = '';
-    this._order   = '';
+    //Select query properties
+    //Defaults:
+    this._prop = {
+        table: options.table || '',
+        columns: options.columns || '*',
+        where: options.where || '',
+        whereArgs: options.whereArgs || [],
+        limit: options.limit || '',
+        order: options.order || ''
+    }
 
     return this;
 }
@@ -49,9 +53,9 @@ Select.prototype.limit = limit;
  * Run
  */
 Select.prototype.run = function Run(cb) {
-    var query = util.format('SELECT %s FROM %s %s %s %s', this._columns, this._table, this._where, this._order, this._limit);
+    var query = util.format('SELECT %s FROM %s %s %s %s', this._prop.columns, this._prop.table, this._prop.where, this._prop.order, this._prop.limit);
 
-    this._connection.queryPost(query, this._whereArgs, cb);
+    this._connection.queryPost(query, this._prop.whereArgs, cb);
 
     return this;
 }

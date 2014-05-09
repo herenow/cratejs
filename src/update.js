@@ -12,23 +12,26 @@ var where   = require('./proto/where');
  * db.Update() - initiator
  */
 function Init(_table) {
-    return new Update(_table, this._connection);
+    return new Update({table: _table}, this._connection);
 }
 
 
 /**
  * Update constructor
  */
-function Update(_table, connection) {
+function Update(options, connection) {
+    options = options || {};
     this._connection = connection;
 
     //defaults
-    this._table    = _table || '';
-    this._set      = '';
-    this._setArgs  = [];
-    this._where   = '';
-    this._whereArgs = [];
-    this._limit   = '';
+    this._prop = {
+        table: options.table || '',
+        set: options.set || '',
+        setArgs: options.setArgs || [],
+        where: options.where || '',
+        whereArgs: options.whereArgs || [],
+        limit: options.limit || '',
+    }
 
     return this;
 }
@@ -47,9 +50,9 @@ Update.prototype.limit = limit;
  * Run
  */
 Update.prototype.run = function Run(cb) {
-    var query = util.format('UPDATE %s SET %s %s %s', this._table, this._set, this._where, this._limit)
+    var query = util.format('UPDATE %s SET %s %s %s', this._prop.table, this._prop.set, this._prop.where, this._prop.limit)
 
-    this._connection.queryPost(query, this._setArgs.concat(this._whereArgs), cb);
+    this._connection.queryPost(query, this._prop.setArgs.concat(this._prop.whereArgs), cb);
 
     return this;
 }

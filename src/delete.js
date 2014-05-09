@@ -11,21 +11,24 @@ var where   = require('./proto/where');
  * db.Delete() - initiator
  */
 function Init(_table) {
-    return new Delete(_table, this._connection);
+    return new Delete({table: _table}, this._connection);
 }
 
 
 /**
  * Delete constructor
  */
-function Delete(_table, connection) {
+function Delete(options, connection) {
+    options = options || {};
     this._connection = connection;
 
     //defaults
-    this._table    = _table || '';
-    this._where   = '';
-    this._whereArgs = [];
-    this._limit   = '';
+    this._prop = {
+        table: options.table || '',
+        where: options.where || '',
+        whereArgs: options.whereArgs || [],
+        limit: options.limit || '',
+    }
 
     return this;
 }
@@ -43,9 +46,9 @@ Delete.prototype.limit = limit;
  * Run
  */
 Delete.prototype.run = function Run(cb) {
-    var query = util.format('DELETE FROM %s %s %s', this._table, this._where, this._limit);
+    var query = util.format('DELETE FROM %s %s %s', this._prop.table, this._prop.where, this._prop.limit);
 
-    this._connection.queryPost(query, this._whereArgs, cb);
+    this._connection.queryPost(query, this._prop.whereArgs, cb);
 
     return this;
 }
