@@ -1,84 +1,52 @@
 var assert = require('assert');
+var Crate  = require('../index');
 
-var Crate, db, query;
+var db = new Crate({
+	host: process.env.CRATE_TEST_HOST || '127.0.0.1',
+	port: process.env.CRATE_TEST_PORT || 4200,
+});
 
 describe('Cratejs', function() {
 
-	describe('Try to initiate a CrateJS client', function(){
-		it('Should initiate a CreateJS client', function() {
-            Crate = require('../index.js');
-            db = new Crate({
-				host: process.env.CRATE_TEST_HOST || '127.0.0.1',
-				port: process.env.CRATE_TEST_PORT || 4200,
-			});
-	});
+	it('db.Select()', function(done) {
+		var select = db.Select('sys.cluster').columns(['id', 'name']).limit(1).order('id', 'desc');
+
+		select.run(done);
 	});
 
-	describe('Build some queries', function(){
-		it('Should build some queries', function() {
-            query = [
-                db.Query('SELECT * FROM sys.cluster LIMIT ?')
-            ];
+	it('db.execute() - Create a sample table', function(done) {
+		db.execute('CREATE TABLE sample (bar integer, id integer, sample string)', [100], function(err, res) {
+			console.log(err, res);
+			done();
 		});
 	});
 
-	describe('Now try to query the dabtase', function(){
-		it('Should return an rows from the query', function(done) {
-			query[0].execute([100], function(err, res) {
-				if(err) {
-					return done(err);
-				}
-				else if(res.rowcount < 1) {
-					return done('no rows returned');
-				}
-				console.log(res);
-				done();
-			});
-		});
-        it('Should return an rows from the query (direct execution)', function(done) {
-            db.execute('SELECT * FROM sys.cluster LIMIT ?', [100], function(err, res) {
-                if(err) {
-                    return done(err);
-                }
-                else if(res.rowcount < 1) {
-                    return done('no rows returned');
-                }
-				console.log(res);
-                done();
-            });
-        });
-		it('Should return create a sample table', function(done) {
-			db.execute('CREATE TABLE sample (bar integer, id integer, sample string)', [100], function(err, res) {
-				if(err) {
-					console.log(err, res)
-				}
-				done();
-			});
-		});
+	it('db.Insert()', function(done) {
+		var insert = db.Insert('sample');
+
+		insert.data({
+			bar: 1,
+			id: 2,
+			sample: 'asdas',
+		}).run(done);
 	});
 
-	describe('Extended methods', function(){
-		it('db.Select', function(done) {
-			db.Select('sys.cluster').run(function(err, res) {
-					console.log(err, res);
-					done();
-			})
-		});
-		it('db.Insert', function(done) {
-			db.Insert('sample').data([{
-				bar: 1,
-				id: 2,
-				sample: 'asdas',
-			}, {
-				bar: 1,
-				id: 2,
-				sample: 'asdas',
-			}]).run(function(err, res) {
-					console.log(err, res);
-					done();
-			})
-		});
+	it('db.Update()', function(done) {
+		var update = db.Update('sample');
+
+		update.set({
+			bar: 2,
+		}).where({
+			id: 2,
+		}).run(done);
 	});
 
+	it('db.Delete()', function(done) {
+		var _delete = db.Delete('sample');
+
+		_delete.where({
+			id: 2,
+		}).run(done);
+	});
 
 });
