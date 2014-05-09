@@ -1,10 +1,16 @@
-/**
- * Libs
- */
-var Controller = require('./src/main');
+var Crate = require('crate-connect');
 
 
 /**
- * Exports
+ * Methods extending
  */
-module.exports = Controller;
+Crate.prototype.Select = require('./src/find');
+Crate.prototype.Insert = require('./src/insert');
+Crate.prototype.Update = require('./src/update');
+Crate.prototype.Delete = require('./src/delete');
+
+
+/**
+ * Expose CrateJS
+ */
+module.exports = Crate;
