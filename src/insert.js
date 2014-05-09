@@ -43,8 +43,6 @@ Insert.prototype.table = table;
 Insert.prototype.run = function Run(cb) {
     var query = util.format('INSERT INTO %s (%s) VALUES %s', this._table, this._dataColumns, this._dataHolders);
 
-    console.log(query)
-
     this._connection.queryPost(query, this._dataArgs, cb);
 
     return this;
