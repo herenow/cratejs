@@ -7,10 +7,10 @@ describe('Cratejs', function() {
 	describe('Try to initiate a CrateJS client', function(){
 		it('Should initiate a CreateJS client', function() {
             Crate = require('../index.js');
-            db = new Crate(
+            db = new Crate({
 				host: process.env.CRATE_TEST_HOST || '127.0.0.1',
 				port: process.env.CRATE_TEST_PORT || 4200,
-			);
+			});
 	});
 	});
 
