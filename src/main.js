@@ -9,7 +9,7 @@ var Execute = require('./execute');
 /**
  * Controller
  */
-var Control = function Contructor(conf) {
+function Control(conf) {
 	if(typeof conf === 'undefined') {
 		conf = {};
 	}

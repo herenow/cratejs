@@ -5,20 +5,31 @@ var Execute = require('./execute');
 
 
 /**
- * db.Query() - Contructor
+ * db.Query() initiator
  */
-var Query = function Query(str) {
-    this._queryString = str;
-
-	return {
-        execute: Execute.query.bind(this) //I should be prototyping :(
-                                          //But this code is being refactored
-                                          //I know this is ugly :(
-    };
+function Init(str) {
+    return new Query(str, this._connection);
 }
+
+
+/**
+ * db.Query - Constructor
+ */
+function Query(str, connection) {
+    this._queryString = str;
+    this._connection  = connection;
+
+    return this;
+}
+
+
+/**
+ * Prototypes
+ */
+Query.prototype.execute = Execute; //db.Query().execute()
 
 
 /**
  * Exports
  */
-module.exports = Query;
+module.exports = Init;

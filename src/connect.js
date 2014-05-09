@@ -15,18 +15,17 @@ var Connect = function Contructor(conf) {
 	this.cluster = conf.cluster || [];
 
 	if(this.cluster.length > 0) { //They sent an array with the host/port of each cluster
-            this.load_balance = 'rr'; //Round-Robin
-            this.rr_count = 0;
-        	this.lb_get = function() {
-            		if(this.rr_count >= this.cluster.length) {
-                		this.rr_count = 0;
-            		}
-            		return this.cluster[ this.rr_count++ ];
-        	}
+        this.load_balance = 'rr'; //Round-Robin
+        this.rr_count = 0;
+    	this.lb_get = function() {
+        		if(this.rr_count >= this.cluster.length) {
+            		this.rr_count = 0;
+        		}
+        		return this.cluster[ this.rr_count++ ];
     	}
+	}
 
 	//TODO test connection method
-
 
     return this;
 }
@@ -63,6 +62,8 @@ Connect.prototype.send = function POST(query, statements, callback) {
 	if(statements.length > 0) {
 		data.args = statements;
 	}
+
+    console.log(data)
 
 	request.write( JSON.stringify(data) );
 	request.end();
