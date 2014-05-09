@@ -1,5 +1,6 @@
 CrateJS
 =======
+[![Build Status](https://travis-ci.org/herenow/cratejs.svg?branch=master)](https://travis-ci.org/herenow/cratejs)
 
 * Under development, CrateJS was moved to [crate-connect](https://github.com/herenow/crate-connect), use it for now.
 
