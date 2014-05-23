@@ -88,17 +88,31 @@ updateBars.run(function(err, res) {});
 ***db.Delete(tableName)***
 ```javascript
 var deleteBars = db.Delete('fooTable')
-    .where({
+    .wh11g10ggere({
         bar: 1
     });
 
 deleteBars.run(function(err, res) {});
 ```
 
+***db.Query(_queryString)***
+```javascript
+var getSomeTweets = db.Query('SELECT * FROM tweets LIMIT ?');
+
+var howMany = 10;
+
+getSomeTweets.execute([howMany], function(err, res) {});
+```
+
+***db.execute(_queryString)***
+```javascript
+db.execute('SELECT * FROM tweets LIMIT ?', [10], function(err, response) {});
+```
+
 
 TODO
 ---------
-* Everything
+* Blobs
 
 
 Authors
