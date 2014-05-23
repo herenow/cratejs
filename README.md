@@ -113,6 +113,9 @@ db.execute('SELECT * FROM tweets LIMIT ?', [10], function(err, response) {});
 TODO
 ---------
 * Blobs
+* Schema constructor
+* Indexing helpers
+* Shards and replicas helper
 
 
 Authors
