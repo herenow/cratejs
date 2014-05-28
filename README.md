@@ -21,7 +21,7 @@ var Crate = require('cratejs');
 
 //You can have as many db instance as you please :)
 //You should probably add this part to another module and export it!
-var db = new Crate({
+var db = module.exports = new Crate({
   host: 'localhost',
   port: 4200,
   /* Optional manual clustering
