@@ -112,10 +112,10 @@ db.execute('SELECT * FROM tweets LIMIT ?', [10], function(err, response) {});
 
 TODO
 ---------
-* Blobs
-* Schema constructor
+* Blob helper
 * Indexing helpers
 * Shards and replicas helper
+* Try out a binary connector
 
 
 Authors
