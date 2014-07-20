@@ -2,8 +2,6 @@ CrateJS
 =======
 [![Build Status](https://travis-ci.org/herenow/cratejs.svg?branch=master)](https://travis-ci.org/herenow/cratejs)
 
-* Under development, CrateJS was moved to [crate-connect](https://github.com/herenow/crate-connect), use it for now.
-
 An extension to [crate-connect](https://github.com/herenow/crate-connect), CrateJS will provide you with better methods for working with [Crate.io](https://www.crate.io/).
 
 
@@ -118,12 +116,7 @@ TODO
 * Try out a binary connector
 
 
-Authors
+Contributors
 ---------
 This was created for the Crate.io data Storage.
 - [herenow](https://github.com/herenow)
-
-
-Thanks to
-----------
-Nobody yet :(
