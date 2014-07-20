@@ -37,6 +37,7 @@ var db = module.exports = new Crate({
 
 Sample docs
 ----------
+
 ***db.Select(tableName)***
 ```javascript
 var findBars = db.Select('fooTable')
@@ -93,6 +94,9 @@ var deleteBars = db.Delete('fooTable')
 deleteBars.run(function(err, res) {});
 ```
 
+Methods inherited from crate-connect
+----------
+
 ***db.Query(_queryString)***
 ```javascript
 var getSomeTweets = db.Query('SELECT * FROM tweets LIMIT ?');
@@ -105,6 +109,47 @@ getSomeTweets.execute([howMany], function(err, res) {});
 ***db.execute(_queryString)***
 ```javascript
 db.execute('SELECT * FROM tweets LIMIT ?', [10], function(err, response) {});
+```
+
+***blob().put(table, sha1Hash, buffer, callback)***
+```javascript
+var buffer = new Buffer('sample')
+var hash = crypto.createHash('sha1').update(buffer).digest('hex')
+
+####blob().put('imagesTable', hash, buffer, function(err) {
+    if(err) {
+        //err.statusCode
+    }
+})
+```
+* Note that if the sha1 hash is not correct, the blob wont be inserted. **The sha1 hash must be calculated from the blob to be inserted.**
+
+
+***blob().get(table, sha1Hash, callback)***
+```javascript
+db.blob().get('imagesTable', '8151325dcdbae9e0ff95f9f9658432dbedfdb209', function(err, buffer) {
+    if(err) {
+        //err.statusCode
+    }
+})
+```
+
+***blob().check(table, sha1Hash, callback)***
+```javascript
+db.blob().check('imagesTable', '8151325dcdbae9e0ff95f9f9658432dbedfdb209', function(err) {
+    if(err) {
+        //err.statusCode
+    }
+})
+```
+
+***blob().delete(table, sha1Hash, callback)***
+```javascript
+db.blob().check('imagesTable', '8151325dcdbae9e0ff95f9f9658432dbedfdb209', function(err) {
+    if(err) {
+        //err.statusCode
+    }
+})
 ```
 
 
