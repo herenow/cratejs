@@ -87,7 +87,7 @@ updateBars.run(function(err, res) {});
 ***db.Delete(tableName)***
 ```javascript
 var deleteBars = db.Delete('fooTable')
-    .wh11g10ggere({
+    .where({
         bar: 1
     });
 
