@@ -1,6 +1,15 @@
+Notice
+----------
+
+**Deprecation notice**:
+
+Please prefer using [megastef](/megastef)/[node-crate](/megastef/node-crate) package :)
+
+
 CrateJS
 =======
 [![Build Status](https://travis-ci.org/herenow/cratejs.svg?branch=master)](https://travis-ci.org/herenow/cratejs)
+
 
 An extension to [crate-connect](https://github.com/herenow/crate-connect), CrateJS will provide you with better methods for working with [Crate.io](https://www.crate.io/).
 
