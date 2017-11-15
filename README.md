@@ -3,7 +3,7 @@ Notice
 
 **Deprecation notice**:
 
-Please prefer using [megastef](/megastef)/[node-crate](/megastef/node-crate) package :)
+Please prefer using [megastef](https://github.com/megastef)/[node-crate](https://github.com/megastef/node-crate) package :)
 
 
 CrateJS
